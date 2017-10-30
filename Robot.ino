@@ -29,9 +29,6 @@
 
       Sempre cite a fonte.
 
-  Baseado no trabalho de FILIPEFLOP
-  https://www.filipeflop.com/blog/tutorial-modulo-bluetooth-com-arduino/
-        
 
 */
 
