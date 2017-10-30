@@ -40,7 +40,7 @@
 
  // Criar um objeto Software Serial
  SoftwareSerial bluetooth(2, 3); // TX, RX (Bluetooth)
- int incomingByte; // Armazena o dado recebido via Bluetooth
+ char incomingByte; // Armazena o dado recebido via Bluetooth
 
  const int PWMA = 11; // Velocidade Motor A
  const int PWMB = 10; // Velocidade MOTOR B
@@ -85,7 +85,7 @@ if (bluetooth.available() > 0){
     frente();
     }
 
-  if (incomingByte == 'R'){
+  if (incomingByte == 'B'){
     rear();
     }  
 
