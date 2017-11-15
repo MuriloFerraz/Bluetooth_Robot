@@ -29,14 +29,13 @@
 
       Sempre cite a fonte.
 
-
-*/
+  */
 
  //
  #include "SoftwareSerial.h" // Biblioteca software serial
 
  // Criar um objeto Software Serial
- SoftwareSerial bluetooth(2, 3); // TX, RX (Bluetooth)
+ SoftwareSerial bluetooth(2, 3); //(Arduino) RX, TX -> TX, RX (Bluetooth)
  char incomingByte; // Armazena o dado recebido via Bluetooth
 
  const int PWMA = 11; // Velocidade Motor A
@@ -47,7 +46,8 @@
   const int AIN2 = 8; // Motor A - 2
 
   const int BIN1 = 5; // Motor B - 1
-  const int BIN2 = 4; // Motor B - 2
+  const int BIN2 = 6; // Motor B - 2
+  
 
   int LED = 13; // LED
 
@@ -56,12 +56,16 @@
 
 void setup() {
   // put your setup code here, to run once:
+  
   bluetooth.begin(9600); // Inicia a comunicação serial via Bluetooth e o arduino
+  //bluetooth.begin(115200);
+ 
+  Serial.begin(9600); // Inicia comunicação serial com o PC (Teste e DEBUG)
 
   // Os pinos a seguir serão selecionados como OUTPUT
   pinMode(PWMA, OUTPUT);
   pinMode(PWMB, OUTPUT);
-  //pinMode(STBY, OUTPUT); // Desabilitar se estiver usando L293D
+  //pinMode(STBY, OUTPUT); // Desabilitar se estiver usar L293D
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(BIN1, OUTPUT);
@@ -74,8 +78,15 @@ void loop() {
   // put your main code here, to run repeatedly:
 if (bluetooth.available() > 0){
   // se comunicação com bluetooth estiver disponível...
-  incomingByte = bluetooth.read();
+  incomingByte = bluetooth.read();  
   // armazena na variavel o ultimo byte recebido
+      
+  Serial.println(incomingByte); // Escreve na porta serial o dado recebido (veja em Serial Monitor)
+  
+ // O aplicativo utilizado com este código foi Bluetooth RC Controller, obtido gratuitamente
+ // na Play Store (Loja de aplicativos do Android)
+ // Este aplicativo envia "S" a cada 50 ms se nenhuma tecla for pressionada e
+ // "F", "B", "L" e "R" se as respectivas teclas forem pressionados e/ou mantidas pressionadas.
 
   // aqui começa a brincadeira...
   if (incomingByte == 'F'){
@@ -104,21 +115,21 @@ if (bluetooth.available() > 0){
 void frente()  
 {
   // o robo anda para frente 
-  // digitalWrite(STBY, HIGH);  // Desabilite sempre que ocorrer se estiver a usar L293D
+  // digitalWrite(STBY, HIGH);  // Desabilite se usar L293D
   
   analogWrite(PWMA, 255); //  0 - Parado /  255 Vel Máxima
-  digitalWrite(AIN1, LOW); 
-  digitalWrite(AIN2, HIGH);
+  digitalWrite(AIN1, HIGH); 
+  digitalWrite(AIN2, LOW);
   
   analogWrite(PWMB, 255); // 0 - Parado /  255 Vel Máxima
-  digitalWrite(BIN1, LOW);
-  digitalWrite(BIN2, HIGH);
+  digitalWrite(BIN1, HIGH);
+  digitalWrite(BIN2, LOW);
   digitalWrite(LED, LOW);
 }
 
 void parado()
 {
-  // o robo esta parado
+  // o robo permanece parado
   // digitalWrite(STBY, LOW);
   
   analogWrite(PWMA, 0);
@@ -166,15 +177,15 @@ void direita()
 
 void rear()  
 {
-  // o robo anda para frente 
+  // o robo anda para traz 
   // digitalWrite(STBY, HIGH);  // Desabilite sempre que ocorrer se estiver a usar L293D
   
   analogWrite(PWMA, 255); //  0 - Parado /  255 Vel Máxima
-  digitalWrite(AIN1, HIGH); 
-  digitalWrite(AIN2, LOW);
+  digitalWrite(AIN1, LOW); 
+  digitalWrite(AIN2, HIGH);
   
   analogWrite(PWMB, 255); // 0 - Parado /  255 Vel Máxima
-  digitalWrite(BIN1, HIGH);
-  digitalWrite(BIN2, LOW);
+  digitalWrite(BIN1, LOW);
+  digitalWrite(BIN2, HIGH);
   digitalWrite(LED, HIGH); // Acende a luz de ré
 }
