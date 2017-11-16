@@ -57,7 +57,7 @@
 void setup() {
   // put your setup code here, to run once:
   
-  bluetooth.begin(9600); // Inicia a comunicação serial via Bluetooth e o arduino
+  bluetooth.begin(9600); // Inicia a comunicação serial via Bluetooth e o arduino 
   //bluetooth.begin(115200);
  
   Serial.begin(9600); // Inicia comunicação serial com o PC (Teste e DEBUG)
@@ -78,6 +78,7 @@ void loop() {
   // put your main code here, to run repeatedly:
 if (bluetooth.available() > 0){
   // se comunicação com bluetooth estiver disponível...
+      
   incomingByte = bluetooth.read();  
   // armazena na variavel o ultimo byte recebido
       
@@ -117,7 +118,7 @@ void frente()
   // o robo anda para frente 
   // digitalWrite(STBY, HIGH);  // Desabilite se usar L293D
   
-  analogWrite(PWMA, 255); //  0 - Parado /  255 Vel Máxima
+  analogWrite(PWMA, 255); //  0 - Parado /  255 - Vel Máxima
   digitalWrite(AIN1, HIGH); 
   digitalWrite(AIN2, LOW);
   
@@ -178,7 +179,7 @@ void direita()
 void rear()  
 {
   // o robo anda para traz 
-  // digitalWrite(STBY, HIGH);  // Desabilite sempre que ocorrer se estiver a usar L293D
+  // digitalWrite(STBY, HIGH);  // Desabilite se usar L293D
   
   analogWrite(PWMA, 255); //  0 - Parado /  255 Vel Máxima
   digitalWrite(AIN1, LOW); 
